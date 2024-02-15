@@ -6,6 +6,8 @@ package daw;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  *
@@ -15,21 +17,26 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<Viaje> listaViajes= getListaViajes();
-        HashMap<String,Integer> listaOrigen=listaOrigen(listaViajes);
+        ArrayList<Viaje> listaViajes = getListaViajes();
+        
+        //Metodo A
+        HashMap<String, Integer> listaOrigen = listaOrigen(listaViajes);
         System.out.println("Metodo A -> lista de viajes por origen y cantidad:");
-        listaOrigen.forEach((k,v)->System.out.println("origen: " + k + " " + v +" viajes"));
+        listaOrigen.forEach((k, v) -> System.out.println("origen: " + k + " " + v + " viajes"));
         
-                
-                
-       }
-        
-        
-    
+        //Metodo B
+        System.out.println("Metodo B-> lista de viajes por destino");
+        HashSet<String> listaDestinos=listaDestino(listaViajes);
+        Iterator<String> it= listaDestinos.iterator();
+        while(it.hasNext()){
+            System.out.println("destino: "+ it.next());
+        }
+
+    }
+
     //----------------------------------------
     // ABRE EL ARCHIVO POM.XML, MODIFICA EL CONTENIDO QUE HAY ENTRE LAS ETIQUETAS
     // <artifactId>PruebaFeb24</artifactId> PARA QUE SEA <artifactId>PruebaFeb24+TUNOMBRE</artifactId>
-
     // CREA UN REPOSITORIO LOCAL GIT, AÑADE EN UN PRIMER COMMIT LOS ARCHIVOS NECESARIOS
     // DEL PROYECTO. EL REPOSITORIO, AL FINALIZAR LA PRUEBA, DEBE CONTENER CUATRO COMMITS, UNO POR CADA
     // APARTADO. AL CREAR EL ZIP, INCLUYE LA CARPETA .GIT. SI NO HAY CONTROL DE VERSIONES CORRECTO
@@ -65,19 +72,27 @@ public class Main {
         return listaViajes;
     }
 
-    public static HashMap<String,Integer> listaOrigen(ArrayList<Viaje> listaViajes) {
+    public static HashMap<String, Integer> listaOrigen(ArrayList<Viaje> listaViajes) {
         HashMap<String, Integer> listaDevuelta = new HashMap<>();
-        
+
         for (Viaje p : listaViajes) {
             if (listaDevuelta.containsKey(p.origen())) {
-                listaDevuelta.put(p.origen(), listaDevuelta.get(p.origen())+1);
+                listaDevuelta.put(p.origen(), listaDevuelta.get(p.origen()) + 1);
             } else {
                 listaDevuelta.put(p.origen(), 1);
             }
 
-            
-        
+        }
+        return listaDevuelta;
     }
+    
+    
+    public static HashSet<String> listaDestino(ArrayList<Viaje> listaViajes){
+        HashSet<String> listaDevuelta = new HashSet<>();
+        for(Viaje p:listaViajes){
+            listaDevuelta.add(p.origen());
+        }
+        
         return listaDevuelta;
     }
 }
