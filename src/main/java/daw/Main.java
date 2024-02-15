@@ -31,6 +31,17 @@ public class Main {
         while(it.hasNext()){
             System.out.println("destino: "+ it.next());
         }
+        
+        //Metodo C
+         HashMap<String, Integer> listaPasajerosDestino = cantidadPasajerosDestino(listaViajes);
+         Iterator<String> it2=listaPasajerosDestino.keySet().iterator();
+         
+         while(it2.hasNext()){
+             System.out.println("Destino " +it2 +" pasajeros" + listaPasajerosDestino.get(it2.next()));
+         }
+        
+         
+         
 
     }
 
@@ -95,4 +106,18 @@ public class Main {
         
         return listaDevuelta;
     }
+    
+    public static HashMap<String,Integer> cantidadPasajerosDestino(ArrayList<Viaje> listaViajes){
+        HashMap<String, Integer> listaDevuelta = new HashMap<>();
+        for (Viaje p : listaViajes) {
+            if (listaDevuelta.containsKey(p.origen())) {
+                listaDevuelta.put(p.origen(), listaDevuelta.get(p.origen()) + p.numeroPasajeros());
+            } else {
+                listaDevuelta.put(p.origen(), p.numeroPasajeros());
+            }
+
+        }
+        return listaDevuelta;
+    }
+            
 }
