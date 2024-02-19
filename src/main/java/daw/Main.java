@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
@@ -24,6 +25,8 @@ public class Main {
         System.out.println("Metodo A -> lista de viajes por origen y cantidad:");
         listaOrigen.forEach((k, v) -> System.out.println("origen: " + k + " " + v + " viajes"));
         
+        
+        
         //Metodo B
         System.out.println("Metodo B-> lista de viajes por destino");
         HashSet<String> listaDestinos=listaDestino(listaViajes);
@@ -31,14 +34,26 @@ public class Main {
         while(it.hasNext()){
             System.out.println("destino: "+ it.next());
         }
+        for (Iterator<String> iterator = listaDestinos.iterator(); iterator.hasNext();) {
+            String next = iterator.next();
+            System.out.println("Destinos: " + next );
+            
+        }
         
         //Metodo C
          HashMap<String, Integer> listaPasajerosDestino = cantidadPasajerosDestino(listaViajes);
          Iterator<String> it2=listaPasajerosDestino.keySet().iterator();
          
          while(it2.hasNext()){
-             System.out.println("Destino " +it2 +" pasajeros" + listaPasajerosDestino.get(it2.next()));
+             String texto = it2.next();
+             System.out.println("Destino " +texto +" pasajeros " + listaPasajerosDestino.get(texto));
          }
+         for (Map.Entry<String, Integer> entry : listaPasajerosDestino.entrySet()) {
+            Object key = entry.getKey();
+            Object val = entry.getValue();
+             System.out.println("Destino "+ key + " Pasajeros: " + val);
+            
+        }
         
          
          
@@ -101,19 +116,19 @@ public class Main {
     public static HashSet<String> listaDestino(ArrayList<Viaje> listaViajes){
         HashSet<String> listaDevuelta = new HashSet<>();
         for(Viaje p:listaViajes){
-            listaDevuelta.add(p.origen());
+            listaDevuelta.add(p.destino());
         }
-        
+      
         return listaDevuelta;
     }
     
     public static HashMap<String,Integer> cantidadPasajerosDestino(ArrayList<Viaje> listaViajes){
         HashMap<String, Integer> listaDevuelta = new HashMap<>();
         for (Viaje p : listaViajes) {
-            if (listaDevuelta.containsKey(p.origen())) {
-                listaDevuelta.put(p.origen(), listaDevuelta.get(p.origen()) + p.numeroPasajeros());
+            if (listaDevuelta.containsKey(p.destino())) {
+                listaDevuelta.put(p.destino(), listaDevuelta.get(p.destino()) + p.numeroPasajeros());
             } else {
-                listaDevuelta.put(p.origen(), p.numeroPasajeros());
+                listaDevuelta.put(p.destino(), p.numeroPasajeros());
             }
 
         }
