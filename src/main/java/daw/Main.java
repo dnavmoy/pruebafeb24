@@ -5,6 +5,8 @@
 package daw;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -48,13 +50,18 @@ public class Main {
              String texto = it2.next();
              System.out.println("Destino " +texto +" pasajeros " + listaPasajerosDestino.get(texto));
          }
-         for (Map.Entry<String, Integer> entry : listaPasajerosDestino.entrySet()) {
-            Object key = entry.getKey();
-            Object val = entry.getValue();
-             System.out.println("Destino "+ key + " Pasajeros: " + val);
-            
-        }
+//         for (Map.Entry<String, Integer> entry : listaPasajerosDestino.entrySet()) {
+//            Object key = entry.getKey();
+//            Object val = entry.getValue();
+//             System.out.println("Destino "+ key + " Pasajeros: " + val);
+//            
+//        }
         
+
+        // Metodo C
+        
+        ordenar(listaViajes);
+        listaViajes.forEach(e->System.out.println("Destino: "+ e.destino()+ " nº " + e.numeroPasajeros()));
          
          
 
@@ -135,4 +142,13 @@ public class Main {
         return listaDevuelta;
     }
             
+    
+    public static void ordenar (ArrayList<Viaje> viajes){
+        Comparator<Viaje> porPasajero= (e1,e2)-> e1.numeroPasajeros()-e2.numeroPasajeros();
+        //Comparator<Viaje> porPasajero= (e1,e2)-> Integer.compare(e1.numeroPasajeros(), e2.numeroPasajeros());
+        Comparator<Viaje> porDestino=(v1,v2)-> v1.destino().compareTo(v2.destino());
+        Collections.sort(viajes,porDestino.thenComparing(porPasajero));
+        
+        
+        }
 }
